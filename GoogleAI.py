@@ -1,7 +1,12 @@
 from typing import Union
 import google.generativeai as genai
-from google.generativeai.types import HarmCategory, HarmBlockThreshold, FunctionDeclaration
+from google.generativeai.types import (
+    HarmCategory,
+    HarmBlockThreshold,
+    FunctionDeclaration,
+)
 import httpx
+
 
 class Parts:
     @staticmethod
@@ -12,9 +17,9 @@ class Parts:
         @classmethod
         def upload_from_file(cls, path: str):
             if "png" in path:
-                file = genai.upload_file(path, mime_type='image/png')
+                file = genai.upload_file(path, mime_type="image/png")
             else:
-                file = genai.upload_file(path, mime_type='image/jpeg')
+                file = genai.upload_file(path, mime_type="image/jpeg")
             return cls(file)
 
         @classmethod
@@ -27,10 +32,10 @@ class Parts:
 
             if "png" in url:
                 print("png in file")
-                file = genai.upload_file(path, mime_type='image/png')
+                file = genai.upload_file(path, mime_type="image/png")
             else:
                 print("jpg in file")
-                file = genai.upload_file(path, mime_type='image/jpeg')
+                file = genai.upload_file(path, mime_type="image/jpeg")
             return cls(file)
 
         def to_raw(self) -> genai.types.file_types.File:
@@ -51,12 +56,7 @@ class BaseRole:
         self.tag = "none"
 
     def res(self) -> dict:
-        return {
-            "role": self.tag,
-            "parts": [
-                i.to_raw() for i in self.content
-            ]
-        }
+        return {"role": self.tag, "parts": [i.to_raw() for i in self.content]}
 
 
 class Roles:
@@ -87,7 +87,7 @@ class Context:
             HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
             HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
             HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
-            HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
+            HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
         }
         self.tools = tools
         self.history = []
@@ -105,7 +105,9 @@ class Context:
     def gen_content(self, content: Roles.User) -> str:
         try:
             new = self.__gen_content(content)
-            g_c = self.model.start_chat(history=new, enable_automatic_function_calling=True)
+            g_c = self.model.start_chat(
+                history=new, enable_automatic_function_calling=True
+            )
             # res = self.model.generate_content(contents=new, safety_settings=self.safety)
             print(content.res())
             res = g_c.send_message(content.res(), safety_settings=self.safety)
@@ -113,6 +115,6 @@ class Context:
             del g_c
             return res.text
         except Exception as e:
-            self.history = self.history[:len(self.history) - 1]
+            self.history = self.history[: len(self.history) - 1]
             del g_c
             raise e

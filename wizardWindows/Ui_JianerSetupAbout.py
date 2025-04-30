@@ -28,7 +28,9 @@ class Ui_Form(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.page)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        spacerItem = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         self.verticalLayout.addItem(spacerItem)
         self.widget = QtWidgets.QWidget(self.page)
         self.widget.setMaximumSize(QtCore.QSize(16777215, 88))
@@ -44,7 +46,9 @@ class Ui_Form(object):
         self.LargeTitleLabel.setObjectName("LargeTitleLabel")
         self.horizontalLayout_2.addWidget(self.LargeTitleLabel)
         self.verticalLayout.addWidget(self.widget)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 5, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            20, 5, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         self.verticalLayout.addItem(spacerItem1)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
@@ -65,7 +69,9 @@ class Ui_Form(object):
         self.TitleLabel.setFont(font)
         self.TitleLabel.setObjectName("TitleLabel")
         self.verticalLayout_4.addWidget(self.TitleLabel)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 2, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            20, 2, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum
+        )
         self.verticalLayout_4.addItem(spacerItem2)
         self.SubtitleLabel = SubtitleLabel(self.page)
         font = QtGui.QFont()
@@ -99,14 +105,18 @@ class Ui_Form(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
-        spacerItem3 = QtWidgets.QSpacerItem(20, 151, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            20, 151, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.gridLayout.addItem(spacerItem3, 5, 0, 1, 1)
         self.NormalIconButton_2 = ElevatedCardWidget(self.scrollAreaWidgetContents)
         self.NormalIconButton_2.setMaximumSize(QtCore.QSize(16777215, 110))
         self.NormalIconButton_2.setObjectName("NormalIconButton_2")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.NormalIconButton_2)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        spacerItem4 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem4 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_6.addItem(spacerItem4)
         self.IconWidget_2 = IconWidget(self.NormalIconButton_2)
         self.IconWidget_2.setEnabled(True)
@@ -114,11 +124,15 @@ class Ui_Form(object):
         self.IconWidget_2.setMaximumSize(QtCore.QSize(40, 40))
         self.IconWidget_2.setObjectName("IconWidget_2")
         self.horizontalLayout_6.addWidget(self.IconWidget_2)
-        spacerItem5 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem5 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_6.addItem(spacerItem5)
         self.verticalLayout_6 = QtWidgets.QVBoxLayout()
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        spacerItem6 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem6 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_6.addItem(spacerItem6)
         self.TitleLabel_3 = TitleLabel(self.NormalIconButton_2)
         self.TitleLabel_3.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -140,7 +154,9 @@ class Ui_Form(object):
         self.SubtitleLabel_4.setWordWrap(True)
         self.SubtitleLabel_4.setObjectName("SubtitleLabel_4")
         self.verticalLayout_6.addWidget(self.SubtitleLabel_4)
-        spacerItem7 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem7 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_6.addItem(spacerItem7)
         self.horizontalLayout_6.addLayout(self.verticalLayout_6)
         self.gridLayout.addWidget(self.NormalIconButton_2, 1, 0, 1, 1)
@@ -149,7 +165,9 @@ class Ui_Form(object):
         self.NormalIconButton_4.setObjectName("NormalIconButton_4")
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.NormalIconButton_4)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        spacerItem8 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem8 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_8.addItem(spacerItem8)
         self.IconWidget_4 = IconWidget(self.NormalIconButton_4)
         self.IconWidget_4.setEnabled(True)
@@ -157,11 +175,15 @@ class Ui_Form(object):
         self.IconWidget_4.setMaximumSize(QtCore.QSize(40, 40))
         self.IconWidget_4.setObjectName("IconWidget_4")
         self.horizontalLayout_8.addWidget(self.IconWidget_4)
-        spacerItem9 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem9 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_8.addItem(spacerItem9)
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
-        spacerItem10 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem10 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_8.addItem(spacerItem10)
         self.TitleLabel_5 = TitleLabel(self.NormalIconButton_4)
         self.TitleLabel_5.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -183,7 +205,9 @@ class Ui_Form(object):
         self.SubtitleLabel_6.setWordWrap(True)
         self.SubtitleLabel_6.setObjectName("SubtitleLabel_6")
         self.verticalLayout_8.addWidget(self.SubtitleLabel_6)
-        spacerItem11 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem11 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_8.addItem(spacerItem11)
         self.horizontalLayout_8.addLayout(self.verticalLayout_8)
         self.gridLayout.addWidget(self.NormalIconButton_4, 3, 0, 1, 1)
@@ -192,7 +216,9 @@ class Ui_Form(object):
         self.NormalIconButton.setObjectName("NormalIconButton")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.NormalIconButton)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        spacerItem12 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem12 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_5.addItem(spacerItem12)
         self.IconWidget = IconWidget(self.NormalIconButton)
         self.IconWidget.setEnabled(True)
@@ -200,11 +226,15 @@ class Ui_Form(object):
         self.IconWidget.setMaximumSize(QtCore.QSize(40, 40))
         self.IconWidget.setObjectName("IconWidget")
         self.horizontalLayout_5.addWidget(self.IconWidget)
-        spacerItem13 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem13 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_5.addItem(spacerItem13)
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        spacerItem14 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem14 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_5.addItem(spacerItem14)
         self.TitleLabel_2 = TitleLabel(self.NormalIconButton)
         self.TitleLabel_2.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -226,7 +256,9 @@ class Ui_Form(object):
         self.SubtitleLabel_3.setWordWrap(True)
         self.SubtitleLabel_3.setObjectName("SubtitleLabel_3")
         self.verticalLayout_5.addWidget(self.SubtitleLabel_3)
-        spacerItem15 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem15 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_5.addItem(spacerItem15)
         self.horizontalLayout_5.addLayout(self.verticalLayout_5)
         self.gridLayout.addWidget(self.NormalIconButton, 0, 0, 1, 1)
@@ -235,7 +267,9 @@ class Ui_Form(object):
         self.NormalIconButton_3.setObjectName("NormalIconButton_3")
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.NormalIconButton_3)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        spacerItem16 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem16 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_7.addItem(spacerItem16)
         self.IconWidget_3 = IconWidget(self.NormalIconButton_3)
         self.IconWidget_3.setEnabled(True)
@@ -243,11 +277,15 @@ class Ui_Form(object):
         self.IconWidget_3.setMaximumSize(QtCore.QSize(40, 40))
         self.IconWidget_3.setObjectName("IconWidget_3")
         self.horizontalLayout_7.addWidget(self.IconWidget_3)
-        spacerItem17 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem17 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_7.addItem(spacerItem17)
         self.verticalLayout_7 = QtWidgets.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        spacerItem18 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem18 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_7.addItem(spacerItem18)
         self.TitleLabel_4 = TitleLabel(self.NormalIconButton_3)
         self.TitleLabel_4.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -269,7 +307,9 @@ class Ui_Form(object):
         self.SubtitleLabel_5.setWordWrap(True)
         self.SubtitleLabel_5.setObjectName("SubtitleLabel_5")
         self.verticalLayout_7.addWidget(self.SubtitleLabel_5)
-        spacerItem19 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem19 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_7.addItem(spacerItem19)
         self.horizontalLayout_7.addLayout(self.verticalLayout_7)
         self.gridLayout.addWidget(self.NormalIconButton_3, 2, 0, 1, 1)
@@ -278,7 +318,9 @@ class Ui_Form(object):
         self.NormalIconButton_5.setObjectName("NormalIconButton_5")
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.NormalIconButton_5)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        spacerItem20 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem20 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_9.addItem(spacerItem20)
         self.IconWidget_5 = IconWidget(self.NormalIconButton_5)
         self.IconWidget_5.setEnabled(True)
@@ -287,11 +329,15 @@ class Ui_Form(object):
         self.IconWidget_5.setObjectName("IconWidget_5")
         self.IconWidget_5.setIcon(FluentIcon.CERTIFICATE)
         self.horizontalLayout_9.addWidget(self.IconWidget_5)
-        spacerItem21 = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        spacerItem21 = QtWidgets.QSpacerItem(
+            10, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_9.addItem(spacerItem21)
         self.verticalLayout_9 = QtWidgets.QVBoxLayout()
         self.verticalLayout_9.setObjectName("verticalLayout_9")
-        spacerItem22 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem22 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_9.addItem(spacerItem22)
         self.TitleLabel_6 = TitleLabel(self.NormalIconButton_5)
         self.TitleLabel_6.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -313,7 +359,9 @@ class Ui_Form(object):
         self.SubtitleLabel_7.setWordWrap(True)
         self.SubtitleLabel_7.setObjectName("SubtitleLabel_7")
         self.verticalLayout_9.addWidget(self.SubtitleLabel_7)
-        spacerItem23 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem23 = QtWidgets.QSpacerItem(
+            20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.verticalLayout_9.addItem(spacerItem23)
         self.horizontalLayout_9.addLayout(self.verticalLayout_9)
         self.gridLayout.addWidget(self.NormalIconButton_5, 4, 0, 1, 1)
@@ -331,17 +379,38 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "简儿 - 关于"))
         self.LargeTitleLabel.setText(_translate("Form", "关于"))
         self.TitleLabel.setText(_translate("Form", "简儿 - 简单 可爱 个性 全知"))
-        self.SubtitleLabel.setText(_translate("Form", "OneBot v11，群管，AI，娱乐，新一代QQ群机器人。"))
+        self.SubtitleLabel.setText(
+            _translate("Form", "OneBot v11，群管，AI，娱乐，新一代QQ群机器人。")
+        )
         self.SubtitleLabel_2.setText(_translate("Form", "Version 2.0.0.0 - Release"))
         self.TitleLabel_3.setText(_translate("Form", "哔哩哔哩 Bilibili"))
         self.SubtitleLabel_4.setText(_translate("Form", "这里有我们的最新动态。"))
         self.TitleLabel_5.setText(_translate("Form", "Github 反馈页面"))
-        self.SubtitleLabel_6.setText(_translate("Form", "遇到了bug (＃°Д°) ？！快点击这里告诉我们的开发者"))
+        self.SubtitleLabel_6.setText(
+            _translate("Form", "遇到了bug (＃°Д°) ？！快点击这里告诉我们的开发者")
+        )
         self.TitleLabel_2.setText(_translate("Form", "体验原生简儿"))
-        self.SubtitleLabel_3.setText(_translate("Form", "点此加入我们的官方QQ群 983497968 体验原生简儿。"))
+        self.SubtitleLabel_3.setText(
+            _translate("Form", "点此加入我们的官方QQ群 983497968 体验原生简儿。")
+        )
         self.TitleLabel_4.setText(_translate("Form", "Github 开源页面"))
-        self.SubtitleLabel_5.setText(_translate("Form", "简儿 2.0.0.0 是开源项目，她被协议 GPLv3 所保护。"))
+        self.SubtitleLabel_5.setText(
+            _translate("Form", "简儿 2.0.0.0 是开源项目，她被协议 GPLv3 所保护。")
+        )
         self.TitleLabel_6.setText(_translate("Form", "版权所有 © 2025 思锐工作室"))
-        self.SubtitleLabel_7.setText(_translate("Form", "请在QQ群中输入输入 /关于 来查看更详细的关于信息。"))
-from qfluentwidgets import ElevatedCardWidget, IconWidget, LargeTitleLabel, PopUpAniStackedWidget, SmoothScrollArea, SubtitleLabel, TitleLabel, FluentIcon
+        self.SubtitleLabel_7.setText(
+            _translate("Form", "请在QQ群中输入输入 /关于 来查看更详细的关于信息。")
+        )
+
+
+from qfluentwidgets import (
+    ElevatedCardWidget,
+    IconWidget,
+    LargeTitleLabel,
+    PopUpAniStackedWidget,
+    SmoothScrollArea,
+    SubtitleLabel,
+    TitleLabel,
+    FluentIcon,
+)
 from wizardWindows import JianerSetupWizard_rc

@@ -26,7 +26,9 @@ class Ui_Form(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.page)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        spacerItem = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         self.verticalLayout.addItem(spacerItem)
         self.widget = QtWidgets.QWidget(self.page)
         self.widget.setMaximumSize(QtCore.QSize(16777215, 88))
@@ -51,7 +53,9 @@ class Ui_Form(object):
         self.SubtitleLabel_5.setWordWrap(True)
         self.SubtitleLabel_5.setObjectName("SubtitleLabel_5")
         self.verticalLayout.addWidget(self.SubtitleLabel_5)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         self.verticalLayout.addItem(spacerItem1)
         self.SmoothScrollArea = SmoothScrollArea(self.page)
         self.SmoothScrollArea.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -88,8 +92,25 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "简儿 - 核对设置清单"))
         self.LargeTitleLabel.setText(_translate("Form", "核对设置清单并生成设置"))
-        self.SubtitleLabel_5.setText(_translate("Form", "    根据您的设置，当前已生成如下设置内容："))
+        self.SubtitleLabel_5.setText(
+            _translate("Form", "    根据您的设置，当前已生成如下设置内容：")
+        )
         self.PrimaryPushButton.setText(_translate("Form", "应用"))
         self.PrimaryPushButton_2.setText(_translate("Form", "      启动吧，我的简儿！"))
-from qfluentwidgets import ElevatedCardWidget, IconWidget, LargeTitleLabel, PopUpAniStackedWidget, SmoothScrollArea, SubtitleLabel, TitleLabel, FluentIcon, CardWidget, LineEdit, PlainTextEdit, PrimaryPushButton
+
+
+from qfluentwidgets import (
+    ElevatedCardWidget,
+    IconWidget,
+    LargeTitleLabel,
+    PopUpAniStackedWidget,
+    SmoothScrollArea,
+    SubtitleLabel,
+    TitleLabel,
+    FluentIcon,
+    CardWidget,
+    LineEdit,
+    PlainTextEdit,
+    PrimaryPushButton,
+)
 from wizardWindows import JianerSetupWizard_rc

@@ -6,8 +6,10 @@ from io import BytesIO
 import httpx
 from PIL import ImageFilter
 
+
 def open_from_url(url: str):
     return Image.open(BytesIO(httpx.get(url).content))
+
 
 def square_scale(image: Image, height: int):
     old_width, old_height = image.size
@@ -15,15 +17,17 @@ def square_scale(image: Image, height: int):
     width = int(old_width * x)
     return image.resize((width, height))
 
-def wrap_text(text, chars_per_line=13):
-    lines = [text[i:i + chars_per_line] for i in range(0, len(text), chars_per_line)]
-    return '\
-'.join(lines)
 
-async def get_image(quote, ava_url, name, uin):  
-    mask_path = "assets/quote/mask.png" 
+def wrap_text(text, chars_per_line=13):
+    lines = [text[i : i + chars_per_line] for i in range(0, len(text), chars_per_line)]
+    return "\
+".join(lines)
+
+
+async def get_image(quote, ava_url, name, uin):
+    mask_path = "assets/quote/mask.png"
     mask = Image.open(mask_path).convert("RGBA")
-    background = Image.new('RGBA', mask.size, (255, 255, 255, 255))
+    background = Image.new("RGBA", mask.size, (255, 255, 255, 255))
     head = open_from_url(ava_url).convert("RGBA")
 
     title_font = ImageFont.truetype(r"assets/t.ttf", size=36)
@@ -45,7 +49,7 @@ async def get_image(quote, ava_url, name, uin):
     x_offset = 640
     y_offset = 165
     for i, char in enumerate(text):
-        if char.isdigit() or char == '.':
+        if char.isdigit() or char == ".":
             font = digit_font
             fill_color = (255, 0, 0)
         elif ord(char) in range(0x1F600, 0x1F64F):  # 检查是否为emoji
@@ -62,26 +66,38 @@ async def get_image(quote, ava_url, name, uin):
 
         draw.text((x_offset, y_offset), char, font=font, fill=fill_color)
         x_offset += char_width
-        if char == '\
-':
+        if (
+            char
+            == "\
+"
+        ):
             x_offset = 640
             y_offset += 40
 
-    draw.text((862 if len(name) >= 7 else 1000, 465), f"——{name}", font=desc_font, fill=(112, 112, 112))
+    draw.text(
+        (862 if len(name) >= 7 else 1000, 465),
+        f"——{name}",
+        font=desc_font,
+        fill=(112, 112, 112),
+    )
 
-    nbg = Image.new('RGB', mask.size, (0, 0, 0))
+    nbg = Image.new("RGB", mask.size, (0, 0, 0))
     nbg.paste(background, (0, 0))
     nbg.save("./temps/quote.png")
 
-async def handle(message, actions, images = None) -> Segments.Image:
+
+async def handle(message, actions, images=None) -> Segments.Image:
     if isinstance(message[0], Segments.Reply):
         msg_id = message[0].id
     else:
         return
 
     content = await actions.get_msg(msg_id)
-    name = content.data["sender"]["nickname"] if not content.data["sender"].get("card") else \
-        content.data["sender"]["card"]
+    name = (
+        content.data["sender"]["nickname"]
+        if not content.data["sender"].get("card")
+        else content.data["sender"]["card"]
+    )
     uin = content.data["sender"]["user_id"]
     message = content.data["message"]
     message = gen_message({"message": message})
@@ -90,6 +106,8 @@ async def handle(message, actions, images = None) -> Segments.Image:
         print("有图")
         await get_image(text, images, name, uin)  # 传递 uin 参数
     else:
-        await get_image(text, f"http://q2.qlogo.cn/headimg_dl?dst_uin={uin}&spec=640", name, uin) # 传递 uin 参数
+        await get_image(
+            text, f"http://q2.qlogo.cn/headimg_dl?dst_uin={uin}&spec=640", name, uin
+        )  # 传递 uin 参数
 
     return Segments.Image(f"file://{os.path.abspath('./temps/quote.png')}")
