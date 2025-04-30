@@ -9,8 +9,6 @@
 
 
 from PySide6 import QtCore, QtGui, QtWidgets
-from PySide6.QtGui import QIcon
-import os
 
 
 class Ui_Form(object):
@@ -413,4 +411,3 @@ from qfluentwidgets import (
     TitleLabel,
     FluentIcon,
 )
-from wizardWindows import JianerSetupWizard_rc

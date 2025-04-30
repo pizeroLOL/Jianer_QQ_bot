@@ -17,7 +17,6 @@ class network_gpt:
             mode = self.mode  # "gpt-3.5-turbo-16k"
             input_data = self.message
             user_lists = self.user_lists
-            image_url = ""
 
             if str(self.uid) not in user_lists:
                 user_lists[str(self.uid)] = []

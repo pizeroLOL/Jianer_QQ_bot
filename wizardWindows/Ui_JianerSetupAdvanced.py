@@ -154,7 +154,6 @@ class Ui_Form(object):
 
 
 from qfluentwidgets import (
-    ElevatedCardWidget,
     IconWidget,
     LargeTitleLabel,
     PopUpAniStackedWidget,
@@ -163,8 +162,5 @@ from qfluentwidgets import (
     TitleLabel,
     FluentIcon,
     CardWidget,
-    LineEdit,
-    PlainTextEdit,
     ComboBox,
 )
-from wizardWindows import JianerSetupWizard_rc

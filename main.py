@@ -1,30 +1,28 @@
 #!/bin/python
-import faulthandler
-
-faulthandler.enable()
-
 import asyncio
+import base64
 import datetime
+import faulthandler
+import io
 import os
+import platform
 import random
 import re
-import base64
-import urllib.parse
-import emoji
+import subprocess
+import threading
 import time
 import traceback
-from openai import OpenAI
-import requests, aiohttp
-from Hyper import Configurator
-import platform
-import psutil
+import urllib.parse
+
+import aiohttp
+import emoji
 import GPUtil
-import subprocess
-from typing import Set
+import psutil
+import requests
+from Hyper import Configurator
 from PIL import Image
-import io
-import threading
-import paramiko
+
+faulthandler.enable()
 
 # import framework
 Configurator.cm = Configurator.ConfigManager(
@@ -32,17 +30,18 @@ Configurator.cm = Configurator.ConfigManager(
 )
 bot_name = Configurator.cm.get_cfg().others["bot_name"]  # 星·简
 bot_name_en = Configurator.cm.get_cfg().others["bot_name_en"]  # Shining girl
-from Hyper import Listener, Events, Logger, Manager, Segments
-from Hyper.Utils import Logic
+from Hyper import Events, Listener, Logger, Manager, Segments
 from Hyper.Events import *
+from Hyper.Utils import Logic
+from prerequisites import prerequisite
+
+import Quote
 
 # import moudles
-from GoogleAI import genai, Context, Parts, Roles
+from GoogleAI import Context, Parts, Roles, genai
 
 # from google.generativeai.types import FunctonDeclaration
 from SearchOnline import network_gpt as SearchOnline
-from prerequisites import prerequisite
-import Quote
 
 config = Configurator.cm.get_cfg()
 logger = Logger.Logger()
@@ -71,7 +70,7 @@ generation_config = {
     "response_mime_type": "text/plain",
 }
 
-sys_prompt = f""""""
+sys_prompt = """"""
 
 model = genai.GenerativeModel()
 
@@ -396,7 +395,7 @@ Welcome! {bot_name} was restarted successfully. Now you can send {reminder}帮�
             ):
                 await actions.send(
                     group_id=event.group_id,
-                    message=Manager.Message(Segments.Text(f"Restarting in progress……")),
+                    message=Manager.Message(Segments.Text("Restarting in progress……")),
                 )
 
                 try:
@@ -497,7 +496,7 @@ Welcome! {bot_name} was restarted successfully. Now you can send {reminder}帮�
                         await actions.send(
                             group_id=event.group_id,
                             message=Manager.Message(
-                                Segments.Text(f"""命令执行结果:
+                                Segments.Text("""命令执行结果:
 ⚠️ WARN 正在退出(Ctrl+C) 
 ℹ️ INFO 重新启动监听器....""")
                             ),
@@ -1193,7 +1192,7 @@ Made by SR Studio
                     group_id=event.group_id,
                     message=Manager.Message(Segments.Text("老公~你回来啦~(*≧︶≦)")),
                 )
-            except Exception as e:
+            except Exception:
                 print(traceback.format_exc)
                 await actions.send(
                     group_id=event.group_id,
@@ -1242,7 +1241,7 @@ Made by SR Studio
                     group_id=event.group_id,
                     message=Manager.Message(Segments.Text("你好呀！妹妹！~o(*≧▽≦)ツ")),
                 )
-            except Exception as e:
+            except Exception:
                 print(traceback.format_exc)
                 await actions.send(
                     group_id=event.group_id,
@@ -1295,7 +1294,7 @@ Made by SR Studio
                         Segments.Text("你好呀！血小板！~o(*≧▽≦)ツ")
                     ),
                 )
-            except Exception as e:
+            except Exception:
                 print(traceback.format_exc)
                 await actions.send(
                     group_id=event.group_id,
@@ -1578,7 +1577,7 @@ Memory Usage：{str(system_info["memory_usage_percentage"]) + "%"}"""
                         output = outputurl["pic"][0]
                         print(output)
 
-                        image_id = await actions.send(
+                        await actions.send(
                             group_id=event.group_id,
                             message=Manager.Message(
                                 Segments.Image(output),
@@ -1638,7 +1637,7 @@ Memory Usage：{str(system_info["memory_usage_percentage"]) + "%"}"""
                                     url=url_setted
                                 ) as response:  # 设置超时时间为7秒
                                     request = await response.json()
-                        except Exception as e:
+                        except Exception:
                             request = "Failed\n" + traceback.format_exc()
 
                         print("请求成功")
@@ -1767,7 +1766,7 @@ AI参与：{"是" if data["aiType"] == 1 else "否"}
             else:
                 await actions.send(
                     group_id=event.group_id,
-                    message=Manager.Message(Segments.Text(f"没有参数。")),
+                    message=Manager.Message(Segments.Text("没有参数。")),
                 )
 
         elif "enc解密" in order:
@@ -1870,7 +1869,7 @@ AI参与：{"是" if data["aiType"] == 1 else "否"}
                                 ),
                             )
 
-                except Exception as e:
+                except Exception:
                     await actions.send(
                         group_id=event.group_id,
                         message=Manager.Message(

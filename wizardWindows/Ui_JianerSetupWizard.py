@@ -394,4 +394,3 @@ from qfluentwidgets import (
     TitleLabel,
     FluentIcon,
 )
-from wizardWindows import JianerSetupWizard_rc

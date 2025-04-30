@@ -1,10 +1,10 @@
+import os
+from io import BytesIO
+
+import httpx
 from Hyper import Segments
 from Hyper.Events import *
 from PIL import Image, ImageDraw, ImageFont
-import os
-from io import BytesIO
-import httpx
-from PIL import ImageFilter
 
 
 def open_from_url(url: str):
@@ -102,7 +102,7 @@ async def handle(message, actions, images=None) -> Segments.Image:
     message = content.data["message"]
     message = gen_message({"message": message})
     text = str(message).replace("[图片]", "")
-    if images != None:
+    if images is not None:
         print("有图")
         await get_image(text, images, name, uin)  # 传递 uin 参数
     else:
