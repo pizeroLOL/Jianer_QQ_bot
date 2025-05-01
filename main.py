@@ -13,14 +13,23 @@ import threading
 import time
 import traceback
 import urllib.parse
+from event_handler import filter_exec, EventCtx
 
 import aiohttp
 import emoji
 import GPUtil
 import psutil
 import requests
-from Hyper import Configurator
+from Hyper import Configurator, Events, Listener, Logger, Manager, Segments
+from Hyper.Events import *
+from Hyper.Utils import Logic
 from PIL import Image
+from prerequisites import prerequisite
+
+import event_handler as ev
+import Quote
+from GoogleAI import Context, Parts, Roles, genai
+from SearchOnline import network_gpt as SearchOnline
 
 faulthandler.enable()
 
@@ -30,18 +39,11 @@ Configurator.cm = Configurator.ConfigManager(
 )
 bot_name = Configurator.cm.get_cfg().others["bot_name"]  # 星·简
 bot_name_en = Configurator.cm.get_cfg().others["bot_name_en"]  # Shining girl
-from Hyper import Events, Listener, Logger, Manager, Segments
-from Hyper.Events import *
-from Hyper.Utils import Logic
-from prerequisites import prerequisite
 
-import Quote
 
 # import moudles
-from GoogleAI import Context, Parts, Roles, genai
 
 # from google.generativeai.types import FunctonDeclaration
-from SearchOnline import network_gpt as SearchOnline
 
 config = Configurator.cm.get_cfg()
 logger = Logger.Logger()
@@ -214,66 +216,20 @@ async def handler(event: Events.Event, actions: Listener.Actions) -> None:
         thread = threading.Thread(target=timing_message, args=(actions,))
         thread.start()
 
-    if isinstance(event, Events.HyperListenerStartNotify):
-        if os.path.exists("restart.temp"):
-            with open("restart.temp", "r", encoding="utf-7") as f:
-                group_id = f.read()
-                f.close()
-            os.remove("restart.temp")
-            await actions.send(
-                group_id=group_id,
-                message=Manager.Message(
-                    Segments.Text(f"""{bot_name} {bot_name_en} - 简单 可爱 个性 全知
-————————————————————
-Welcome! {bot_name} was restarted successfully. Now you can send {reminder}帮助 to know more.""")
-                ),
-            )
+    ctx = EventCtx(
+        event,
+        actions,
+        in_timing,
+        reminder,
+        str(bot_name),  # type: ignore
+        str(bot_name_en),  # type: ignore
+        Super_User,  # type: ignore
+        ROOT_User,  # type: ignore
+        Manage_User,  # type: ignore
+    )
+    await filter_exec.exec(ctx)
 
-    if isinstance(event, Events.GroupMemberIncreaseEvent):
-        user = event.user_id
-        welcome = f""" 加入{bot_name}的大家庭，{bot_name}是你最忠实可爱的女朋友噢o(*≧▽≦)ツ
-随时和{bot_name}交流，你只需要在问题的前面加上 {reminder} 就可以啦！( •̀ ω •́ )✧
-{bot_name}是你最二次元的好朋友，经常@{bot_name} 看看{bot_name}又学会做什么新事情啦~o((>ω< ))o
-祝你在{bot_name}的大家庭里生活愉快！♪(≧∀≦)ゞ☆"""
-
-        await actions.send(
-            group_id=event.group_id,
-            message=Manager.Message(
-                Segments.Image(
-                    f"http://q2.qlogo.cn/headimg_dl?dst_uin={user}&spec=640"
-                ),
-                Segments.Text("欢迎"),
-                Segments.At(user),
-                Segments.Text(welcome),
-            ),
-        )
-
-    if isinstance(event, Events.GroupAddInviteEvent):
-        keywords: list = Configurator.cm.get_cfg().others["Auto_approval"]
-        cleaned_text = event.comment.strip().lower()
-
-        for keyword6 in keywords:
-            processed_keyword = keyword6.strip().lower()
-            all_chars_present = True
-            for char in processed_keyword:
-                if char not in cleaned_text:
-                    all_chars_present = False
-                    break
-            if all_chars_present:
-                await actions.set_group_add_request(
-                    flag=event.flag, sub_type=event.sub_type, approve=True, reason=""
-                )
-                await actions.send(
-                    group_id=event.group_id,
-                    message=Manager.Message(
-                        Segments.Text(
-                            f"用户 {event.user_id} 的答案正确,已自动批准,题目数据为 {event.comment} "
-                        )
-                    ),
-                )
-                break
-
-    def execute_command(command):
+    def execute_command(command: str):
         try:
             result = subprocess.run(
                 command, capture_output=True, text=True, check=True, shell=True
@@ -325,27 +281,6 @@ Welcome! {bot_name} was restarted successfully. Now you can send {reminder}帮�
             else:
                 sys_prompt = prerequisite(bot_name, event_user).girl_friend()
 
-        if "ping" == user_message:
-            print(str(event.user_id))
-            await actions.send(
-                group_id=event.group_id,
-                message=Manager.Message(Segments.Text("pong! 爆炸！v(◦'ωˉ◦)~♡ ")),
-            )
-
-        elif f"{bot_name}真棒" in user_message:
-            i = random.randint(1, 3)
-            match i:
-                case 1:
-                    m = "啊！老……老公，别怎么说啦，人……人家好害羞的啦，人家还会努力的(*ᴗ͈ˬᴗ͈)ꕤ*.ﾟ"
-                case 2:
-                    m = "啊~老公~你不要这么夸人家啦~〃∀〃"
-                case 3:
-                    m = "唔……谢……谢谢老公啦🥰~"
-
-            await actions.send(
-                group_id=event.group_id, message=Manager.Message(Segments.Text(m))
-            )
-
         # not_allowed_word = ["小塑塑真棒", "小塑塑棒不棒"]
         # for item in not_allowed_word:
         #     contains = []
@@ -387,36 +322,7 @@ Welcome! {bot_name} was restarted successfully. Now you can send {reminder}帮�
                 order = user_message[order_i + len(reminder) :].strip()
                 print("收到命令 " + order)
 
-        if f"{reminder}重启" == user_message:
-            if (
-                str(event.user_id) in Super_User
-                or str(event.user_id) in ROOT_User
-                or str(event.user_id) in Manage_User
-            ):
-                await actions.send(
-                    group_id=event.group_id,
-                    message=Manager.Message(Segments.Text("Restarting in progress……")),
-                )
-
-                try:
-                    with open("restart.temp", "w", encoding="utf-7") as f:
-                        f.write(str(event.group_id))
-                        f.close()
-                except:
-                    pass
-
-                Listener.restart()
-            else:
-                await actions.send(
-                    group_id=event.group_id,
-                    message=Manager.Message(
-                        Segments.Text(
-                            f"不能这么做！那是一块丞待开发的禁地，可能很危险，{bot_name}很胆小……꒰>﹏< ꒱"
-                        )
-                    ),
-                )
-
-        elif "runcommand " in order:
+        if "runcommand " in order:
             blacklist_file = "blacklist.sr"
 
             if (
@@ -454,60 +360,6 @@ Welcome! {bot_name} was restarted successfully. Now you can send {reminder}帮�
                     return
 
                 match order_lower:
-                    case cmd if re.match(r"^scheduled sends.*", cmd):
-                        print("使用命令定时")
-                        try:
-                            send_time = order_lower[
-                                order_lower.find("scheduled sends ")
-                                + len("scheduled sends ") :
-                            ].strip()
-                            if not re.match(
-                                r"^([01][0-9]|2[0-3]):([0-5][0-9])$", send_time[:5]
-                            ):
-                                r = f"""命令执行结果:
-❌ERROR {bot_name}不能识别给定的时间是什么 Σ( ° △ °|||)︴
-ℹ️ INFO 举个🌰子：{reminder}runcommand scheduled sends 00:00 早安 —> 即可让{bot_name}在0点0分准时问候早安噢⌯oᴗo⌯"""
-                                await actions.send(
-                                    group_id=event.group_id,
-                                    message=Manager.Message(Segments.Text(r)),
-                                )
-                            else:
-                                timing_settings = f"{send_time[:5]}⊕{send_time[6::]}"
-                                with open(
-                                    "timing_message.ini", "w", encoding="utf-8"
-                                ) as f:
-                                    f.write(timing_settings)
-                                r = f"""命令执行结果:
-ℹ️ INFO {bot_name}设置成功！(*≧▽≦) """
-                                await actions.send(
-                                    group_id=event.group_id,
-                                    message=Manager.Message(Segments.Text(r)),
-                                )
-                        except Exception as e:
-                            r = f"""命令执行结果:
-❌ERROR {str(type(e))}
-❌ERROR {bot_name}设置失败了…… (╥﹏╥)"""
-                            await actions.send(
-                                group_id=event.group_id,
-                                message=Manager.Message(Segments.Text(r)),
-                            )
-
-                    case "restart":
-                        await actions.send(
-                            group_id=event.group_id,
-                            message=Manager.Message(
-                                Segments.Text("""命令执行结果:
-⚠️ WARN 正在退出(Ctrl+C) 
-ℹ️ INFO 重新启动监听器....""")
-                            ),
-                        )
-                        try:
-                            with open("restart.temp", "w", encoding="utf-7") as f:
-                                f.write(str(event.group_id))
-                        except Exception as e:
-                            print(f"Error saving restart info: {e}")
-                        Listener.restart()
-
                     case "message clear":
                         global cmc
                         del cmc
@@ -517,146 +369,6 @@ Welcome! {bot_name} was restarted successfully. Now you can send {reminder}帮�
                             group_id=event.group_id,
                             message=Manager.Message(
                                 Segments.Text("命令执行结果:\nℹ️ INFO 清除完成")
-                            ),
-                        )
-
-                    case cmd if re.match(r"^set_group_ban.*", cmd):
-                        start_index = order_lower.find("set_group_ban")
-                        if start_index != -1:
-                            result = order[start_index + len("set_group_ban") :].strip()
-                            user_and_duration = re.findall(r"\d+", result)
-                            if len(user_and_duration) == 2:
-                                print("At in loading...")
-                                user_id = user_and_duration[0]
-                                ban_duration = user_and_duration[1]
-                                await actions.set_group_ban(
-                                    group_id=event.group_id,
-                                    user_id=user_id,
-                                    duration=ban_duration,
-                                )
-                                await actions.send(
-                                    group_id=event.group_id,
-                                    message=Manager.Message(
-                                        Segments.Text(
-                                            f"命令执行结果:\nℹ️ INFO 将{user_id}在{event.group_id}中禁言{ban_duration}秒\nℹ️ INFO None."
-                                        )
-                                    ),
-                                )
-
-                    case cmd if re.match(r"^set_group_kick.*", cmd):
-                        start_index = order.find("set_group_kick")
-                        if start_index != -1:
-                            result = order[
-                                start_index + len("set_group_kick") :
-                            ].strip()
-                            user_id = re.search(r"\d+", result).group()
-                            await actions.set_group_kick(
-                                group_id=event.group_id, user_id=user_id
-                            )
-                            await actions.send(
-                                group_id=event.group_id,
-                                message=Manager.Message(
-                                    Segments.Text(
-                                        f"命令执行结果:\nℹ️ INFO 将{user_id}从{event.group_id}中踢出\nℹ️ INFO None."
-                                    )
-                                ),
-                            )
-
-                    case cmd if re.match(r"^scheduled_sends_black add.*", cmd):
-                        black_add_target = order[
-                            order.find("scheduled_sends_black add ")
-                            + len("scheduled_sends_black add ") :
-                        ].strip()
-                        print(black_add_target)
-
-                        def load_blacklist():
-                            try:
-                                with open(blacklist_file, "r", encoding="utf-8") as f:
-                                    return set(line.strip() for line in f)
-                            except FileNotFoundError:
-                                return set()
-
-                        blacklist_content = load_blacklist()
-                        if black_add_target not in blacklist_content:
-                            blacklist_content.add(black_add_target)
-                            try:
-                                with open(blacklist_file, "w", encoding="utf-8") as f:
-                                    for item in blacklist_content:
-                                        f.write(item + "\n")
-                                await actions.send(
-                                    group_id=event.group_id,
-                                    message=Manager.Message(
-                                        Segments.Text(
-                                            f"命令执行结果:\nℹ️ INFO 黑名單添加成功, 現列表:{', '.join(blacklist_content)}"
-                                        )
-                                    ),
-                                )
-                            except Exception as e:
-                                await actions.send(
-                                    group_id=event.group_id,
-                                    message=Manager.Message(
-                                        Segments.Text(
-                                            f"命令执行结果:\n❌ ERROR 黑名單添加失败, 原因:{e}"
-                                        )
-                                    ),
-                                )
-                        else:
-                            await actions.send(
-                                group_id=event.group_id,
-                                message=Manager.Message(
-                                    Segments.Text(
-                                        f"命令执行结果:\n❌ ERROR 黑名單添加失败, 原因:群{black_add_target}已在群发黑名單！"
-                                    )
-                                ),
-                            )
-
-                    case cmd if re.match(r"^scheduled_sends_black del.*", cmd):
-                        black_del_target = order[
-                            order.find("scheduled_sends_black del ")
-                            + len("scheduled_sends_black del ") :
-                        ].strip()
-                        blacklist_content = load_blacklist()
-                        if black_del_target in blacklist_content:
-                            blacklist_content.remove(black_del_target)
-                            try:
-                                with open(blacklist_file, "w", encoding="utf-8") as f:
-                                    for item in blacklist_content:
-                                        f.write(item + "\n")
-                                await actions.send(
-                                    group_id=event.group_id,
-                                    message=Manager.Message(
-                                        Segments.Text(
-                                            f"命令执行结果:\nℹ️ INFO 黑名單删除成功, 現列表:{', '.join(blacklist_content)}"
-                                        )
-                                    ),
-                                )
-                            except Exception as e:
-                                await actions.send(
-                                    group_id=event.group_id,
-                                    message=Manager.Message(
-                                        Segments.Text(
-                                            f"命令执行结果:\n❌ ERROR 黑名單删除失败, 原因:{e}"
-                                        )
-                                    ),
-                                )
-                        else:
-                            await actions.send(
-                                group_id=event.group_id,
-                                message=Manager.Message(
-                                    Segments.Text(
-                                        f"命令执行结果:\n❌ ERROR 黑名單删除失败, 原因:群{black_del_target}不在群发黑名單！"
-                                    )
-                                ),
-                            )
-
-                    case cmd if re.match(r"^scheduled_sends_black list.*", cmd):
-                        blacklist_content = load_blacklist()
-                        await actions.send(
-                            group_id=event.group_id,
-                            message=Manager.Message(
-                                Segments.Text(
-                                    f"黑名单列表加载完成: {', '.join(blacklist_content)}"
-                                )
                             ),
                         )
 
@@ -1721,7 +1433,8 @@ AI参与：{"是" if data["aiType"] == 1 else "否"}
                                             message=Manager.Message(
                                                 Segments.Image(url), Segments.Text(info)
                                             ),
-                                        )  # Segments.Reply(image_id.data.message_id)
+                                            # Segments.Reply(image_id.data.message_id)
+                                        )
                                         await actions.del_message(
                                             selfID.data.message_id
                                         )
